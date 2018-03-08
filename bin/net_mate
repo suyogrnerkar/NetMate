@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+require File.expand_path('../../lib/net_mate/create_application', __FILE__)
+require File.expand_path('../../lib/net_mate/controller_generator', __FILE__)
+require File.expand_path('../../lib/net_mate/model_generator', __FILE__)
+require File.expand_path('../../lib/net_mate/database_generator', __FILE__)
+
+abort 'Please supply an argument' if ARGV.empty?
+
+def show_usage
+  usage = IO.read(File.expand_path('../../lib/net_mate/usage', __FILE__))
+  puts usage
+end
+
+if ARGV[0].downcase == 'new'
+  NetMate::Generators::CreateApplication.new(ARGV[1]).create_app
+elsif ARGV[0].downcase == 'generate' || ARGV[0].downcase == 'g'
+  if ARGV[1].downcase == 'controller'
+    unless ARGV[2]
+      show_usage
+    else
+      NetMate::Generators::ControllerGenerator.new(ARGV[2], ARGV[3..(ARGV.size)]).generate_controller 
+    end
+  elsif ARGV[1].downcase == 'model'
+    unless ARGV[2]
+      show_usage
+    else
+      NetMate::Generators::ModelGenerator.new(ARGV[2], ARGV[3..(ARGV.size)]).generate_model 
+    end
+  elsif ARGV[1].downcase == 'database'
+    NetMate::Generators::DatabaseGenerator.new.check_and_create_database
+  else
+    show_usage
+  end
+elsif ARGV[0].downcase == 'start' || ARGV[0].downcase == 's'
+  port = ARGV[1] ? ARGV[1] : 9000
+  `rackup -p #{port}`
+else
+  show_usage
+end
+

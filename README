@@ -1,0 +1,22 @@
+Welcome to net_mate!
+net_mate is a web-application (MVC)framework. MVC divides your application
+into three layers.
+
+The Model layer represents your domain model (such as Account, Person, Post,
+etc.) and encapsulates the business logic that is specific to your 
+application. In net_mate, database-backed model classes are derived from 
+NetMate::Model. Model allows you to present the data from database rows as
+objects and decorate these data objects with business logic methods.
+
+The Controller layer is responsible for handling incoming HTTP requests and 
+providing a suitable response. Usually this means returning HTML.
+Controllers load and manipulate models, and render view templates in order to 
+generate the appropriate HTTP response. In net_mate, incoming requests are
+routed by NetMate::Dispatcher to an appropriate controller, and controller
+classes are derived from NetMate::Controller.
+
+The View layer is composed of "templates" that are responsible for providing 
+appropriate representations of your application's resources. Templates can 
+come in a variety of formats, but most view templates are HTML with embedded
+Ruby code (ERB files). Views are typically rendered to generate a controller
+response. In net_mate, View generation is handled by erubis.

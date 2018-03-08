@@ -1,0 +1,77 @@
+Usage: net_mate COMMAND [ARGS]
+
+Description:
+COMMAND:
+ new         Create a new net_mate application. "net_mate new my_app" creates
+             a new application called MyApp in "./my_app"
+ generate    Generate controller/database/model (short-cut alias: "g")
+ server      Start the net_mate server (short-cut alias: "s")
+
+-----------------------------------------------------------------------------
+Usage:
+  net_mate generate database
+
+
+Description:
+  Creates a new database for the current application. Need to run this 
+  command before generating a new model.
+
+-----------------------------------------------------------------------------
+Usage:
+  net_mate generate model NAME field:type field:type
+
+
+Description:
+    Creates a new model. Pass the model name, either CamelCased or
+    under_scored, and an optional list of attribute pairs as arguments.
+
+    Attribute pairs are field:type arguments specifying the
+    model's attributes.
+
+Available field types:
+
+    Just after the field name you can specify a type like text or boolean.
+    It will generate the column with the associated SQL type. For example:
+
+        `net_mate generate model post title:string body:text`
+
+    Will generate a title column with a varchar type and a body column with a
+    text type. You can use the following types:
+
+        boolean
+        string
+        integer
+        date
+        datetime
+        text
+        float
+
+Examples:
+    `net_mate generate model account`
+
+        For Model it creates:
+
+            Model:      app/models/account.rb            
+
+    `net_mate generate model post title:string body:text published:boolean`
+
+        Creates a Post model with a string title, text body, and published
+        flag.
+
+-----------------------------------------------------------------------------
+Usage:
+  net_mate generate controller NAME [action action]
+
+
+Description:
+    Creates out a new controller and its views. Pass the controller name,
+    either CamelCased or under_scored, and a list of views as arguments.
+
+    This generates a controller class in app/controllers.
+
+Example:
+    `net_mate generate controller CreditCards open debit credit close`
+
+    CreditCards controller with URLs like /credit_cards/debit.
+        Controller: app/controllers/credit_cards_controller.rb        
+        Views:      app/views/credit_cards/debit.html.erb
